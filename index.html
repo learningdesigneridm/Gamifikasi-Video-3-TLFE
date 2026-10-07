@@ -6,7 +6,7 @@
   <title>Simulasi Kasir Toko</title>
   <style>
     :root {
-      --bg-canvas: #0f172a;
+      --bg-canvas: #0b1329;
       --bg-phone: #f8fafc;
       --card-bg: #ffffff;
       --text-dark: #0f172a;
@@ -59,53 +59,118 @@
       flex-direction: column;
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       border: 4px solid #334155;
       position: relative;
     }
 
-    /* Layar Mulai (Welcome Screen) */
-    .start-screen {
+    .onboarding-screen {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(135deg, #0284c7, #0369a1);
+      background: linear-gradient(165deg, #0369a1, #e2e8f0);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
       z-index: 100;
       color: white;
-      text-align: center;
       padding: 24px;
+      overflow-y: auto;
     }
 
-    .start-icon {
-      font-size: 64px;
-      margin-bottom: 20px;
-      animation: float 3s infinite ease-in-out;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-top: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
-    .btn-start {
-      background: white;
-      color: var(--blue-primary);
-      border: none;
-      padding: 16px 24px;
+    .timestamp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(224, 242, 254, 0.2);
+      border: 1px solid rgba(224, 242, 254, 0.35);
+      color: #bae6fd;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .clock-in-input {
+      width: 100%;
+      background: #ffffff;
+      color: #0f172a;
+      border: 2px solid transparent;
+      outline: none;
+      padding: 14px 16px;
       border-radius: var(--radius-md);
-      font-size: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 8px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+      transition: all 0.2s ease;
+      user-select: auto;
+    }
+
+    .clock-in-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-action-glow {
+      background: #ffffff;
+      color: var(--blue-dark);
+      border: none;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 30px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transition: transform 0.15s ease, background 0.15s;
     }
-    .btn-start:active { transform: scale(0.95); }
 
-    /* Top Dashboard (LOCKED / FIXED HEADER) */
+    .btn-action-glow:active {
+      transform: scale(0.97);
+      background: #f1f5f9;
+    }
+
+    .briefing-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .briefing-avatar {
+      width: 48px;
+      height: 48px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      border: 2px solid #38bdf8;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
     .header-dashboard {
       flex-shrink: 0;
       background: linear-gradient(135deg, #0284c7, #0369a1);
       color: white;
-      padding: 16px;
+      padding: 14px 16px;
       box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
       z-index: 30;
     }
@@ -114,7 +179,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+    }
+
+    .header-title-box {
+      display: flex;
+      flex-direction: column;
     }
 
     .header-title {
@@ -127,20 +197,26 @@
       gap: 6px;
     }
 
+    .header-cashier {
+      font-size: 10px;
+      color: #bae6fd;
+      font-weight: 600;
+    }
+
     .audio-toggle-btn {
       background: rgba(255, 255, 255, 0.2);
       border: none;
       color: white;
-      font-size: 13px;
-      padding: 6px 10px;
+      font-size: 12px;
+      padding: 5px 9px;
       border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .stats-container {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
     .stat-box {
@@ -157,7 +233,7 @@
       font-weight: 700;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       text-transform: uppercase;
     }
 
@@ -189,7 +265,7 @@
       padding: 18px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.03);
       border: 1px solid var(--border-subtle);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       position: relative;
     }
 
@@ -213,9 +289,9 @@
     }
 
     .scene-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: var(--text-dark);
       line-height: 1.25;
     }
@@ -226,55 +302,28 @@
       line-height: 1.5;
     }
 
-    /* Animasi Visual Ruang Kosong */
     .visual-stage {
-      margin-top: 16px;
+      margin-top: 14px;
       background: #f1f5f9;
       border-radius: var(--radius-md);
-      padding: 20px;
+      padding: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 80px;
-      font-size: 40px;
+      min-height: 75px;
+      font-size: 38px;
       gap: 15px;
       border: 1px dashed #cbd5e1;
       overflow: hidden;
     }
 
-    /* Keyframes Animasi Karakter CSS */
-    @keyframes shake { 
-      0% { transform: translateX(0); } 
-      25% { transform: translateX(-4px); } 
-      50% { transform: translateX(4px); } 
-      75% { transform: translateX(-4px); } 
-      100% { transform: translateX(0); } 
-    }
-    @keyframes float { 
-      0% { transform: translateY(0px); } 
-      50% { transform: translateY(-8px); } 
-      100% { transform: translateY(0px); } 
-    }
-    @keyframes pulse { 
-      0% { transform: scale(1); } 
-      50% { transform: scale(1.2); } 
-      100% { transform: scale(1); } 
-    }
-    @keyframes walk-x { 
-      0% { transform: translateX(-15px); } 
-      50% { transform: translateX(15px); } 
-      100% { transform: translateX(-15px); } 
-    }
-    @keyframes drop-coin { 
-      0% { transform: translateY(-20px); opacity: 0; } 
-      50% { opacity: 1; } 
-      100% { transform: translateY(20px); opacity: 0; } 
-    }
-    @keyframes swing {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(15deg); }
-      100% { transform: rotate(0deg); }
-    }
+    /* Keyframes Animasi Karakter */
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+    @keyframes walk-x { 0%, 100% { transform: translateX(-14px); } 50% { transform: translateX(14px); } }
+    @keyframes drop-coin { 0% { transform: translateY(-20px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(20px); opacity: 0; } }
+    @keyframes swing { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(14deg); } }
 
     .anim-shake { animation: shake 1s infinite; }
     .anim-float { animation: float 2.5s infinite ease-in-out; }
@@ -283,7 +332,6 @@
     .anim-drop { animation: drop-coin 1.2s infinite; }
     .anim-swing { animation: swing 2s infinite ease-in-out; transform-origin: top center; }
 
-    /* Pilihan Tindakan */
     .choice-prompt {
       font-size: 11px;
       font-weight: 800;
@@ -305,7 +353,7 @@
       background: var(--card-bg);
       border: 1.5px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 14px 16px;
+      padding: 13px 14px;
       text-align: left;
       cursor: pointer;
       display: flex;
@@ -392,7 +440,6 @@
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    /* REVISI: Ukuran tag status diperkecil */
     .revealed-tag {
       font-size: 9px;
       font-weight: 800;
@@ -406,7 +453,6 @@
     .tag-yellow { background: var(--yellow-light); color: var(--yellow-primary); }
     .tag-red { background: var(--red-light); color: var(--red-primary); }
 
-    /* REVISI: Ukuran badge poin Moral/Kepuasan diperkecil */
     .delta-badges {
       display: flex;
       gap: 4px;
@@ -445,9 +491,7 @@
       gap: 8px;
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
-    .btn-continue:active { transform: scale(0.98); background: var(--blue-dark); }
 
-    /* Debrief / Theory Screen */
     .summary-card {
       background: white;
       border-radius: var(--radius-lg);
@@ -505,7 +549,7 @@
       background: var(--blue-primary);
       color: white;
       border: none;
-      padding: 16px;
+      padding: 15px;
       border-radius: var(--radius-md);
       font-size: 14px;
       font-weight: 800;
@@ -514,35 +558,109 @@
       margin-bottom: 16px;
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
+
+    .field-hint {
+      color: #fca5a5;
+      font-size: 11px;
+      margin-top: 6px;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
 <div class="phone-container">
 
-  <!-- LAYAR MULAI -->
-  <div class="start-screen" id="startScreen">
-    <div class="start-icon">🏪</div>
-    <h1 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">Gamifikasi<br>Simulasi Kasir Toko</h1>
-    <p style="font-size: 14px; font-weight: 500; opacity: 0.9; line-height: 1.4;">
-      Yuk, kita sama-sama simulasikan.<br>Bagaimana respon Bapak/Ibu ketika menjadi seorang kasir dan harus berhadapan dengan berbagai kondisi di toko.
-    </p>
-    <button class="btn-start" onclick="startGame()">▶ Mulai Shift</button>
+  <div class="onboarding-screen" id="clockInScreen">
+    <div>
+      <div class="timestamp-badge">
+        <span>🕒</span> <span id="currentDateDisplay">Hari, tanggal</span>
+      </div>
+      <h1 style="font-size: 24px; font-weight: 900; line-height: 1.25; margin-bottom: 8px;">
+        Presensi Mulai Shift
+      </h1>
+      <p style="font-size: 13px; opacity: 0.9; line-height: 1.5;">
+        Hari baru telah tiba di <strong>Toko IDM Jaya</strong>.<br>
+        Sebelum mulai bekerja, yuk Bapak/Ibu<br>presensi terlebih dahulu dengan menuliskan nama pada kolom di bawah ini.
+      </p>
+
+      <div class="glass-card">
+        <label style="font-size: 14px; font-weight: 800; letter-spacing: 0.5px; opacity: 0.9;">
+          🧑‍🤝‍🧑 Nama Bapak/Ibu:
+        </label>
+        <input 
+          type="text" 
+          id="cashierNameInput" 
+          class="clock-in-input" 
+          placeholder="Ketik nama Bapak/Ibu di sini" 
+          maxlength="50"
+          autocomplete="off"
+        >
+        <div id="nameInputError" class="field-hint">Mohon isi nama Bapak/Ibu terlebih dahulu</div>
+
+        <div style="margin-top: 14px; font-size: 11px; opacity: 0.8; line-height: 1.4;">
+          ❤️ CINTA: Ceria Melayani Semangat Berprestasi
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button class="btn-action-glow" onclick="submitClockIn()">
+        Tekan untuk mulai bekerja ➔
+      </button>
+    </div>
   </div>
 
-  <!-- LOCKED TOP DASHBOARD -->
+  <div class="onboarding-screen" id="briefingScreen" style="display: none;">
+    <div>
+      <div class="timestamp-badge">
+        <span>📋</span> <strong>Briefing Awal Sebelum Mulai Shift</strong>
+      </div>
+
+      <div class="briefing-avatar-row">
+        <div class="briefing-avatar"><a href="https://ibb.co.com/SwYp0vf2"><img src="https://i.ibb.co.com/9HKj2YZJ/anak-toko-square.png" width="32" height="32" style="vertical-align: center"></a></div>
+        <div>
+          <div style="font-size: 15px; font-weight: 800;">Pak Ferdi</div>
+          <div style="font-size: 11px; color: #bae6fd;">Chief of Store Toko IDM Jaya</div>
+        </div>
+      </div>
+
+      <div class="glass-card" style="margin-top: 0;">
+        <div style="font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #fef08a;">
+          "Selamat bekerja, <span id="briefingCashierName">Kasir</span>!"
+        </div>
+        <p style="font-size: 12px; line-height: 1.55; opacity: 0.95; margin-bottom: 12px;">
+          Toko IDM Jaya hari ini diperkirakan akan sangat dinamis. Target kita bukan hanya untuk mencetak sales sebesar-besarnya, tapi juga untuk menjaga <strong>Kepuasan Pelanggan</strong> dan <strong>Kekompakan Tim</strong> setinggi-tingginya.
+        </p>
+        <div style="background: rgba(0,0,0,0.2); padding: 10px 12px; border-radius: 8px; font-size: 11px; line-height: 1.45; border-left: 3px solid #38bdf8;">
+          ⚡ <strong>Instruksi Pelayanan:</strong><br>
+          Setiap respon yang Bapak/Ibu ambil akan menentukan apakah pelanggan pulang dengan puas atau kecewa, serta memengaruhi moral tim kerja Bapak/Ibu.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button class="btn-action-glow" onclick="startSimulatedShift()">
+        Tekan untuk mulai bekerja ➔
+      </button>
+    </div>
+  </div>
+
   <div class="header-dashboard">
     <div class="header-top-row">
-      <div class="header-title">
-        <span>🏪</span> Toko IDM Jaya
+      <div class="header-title-box">
+        <div class="header-title">
+          <span>🏪</span> Toko IDM Jaya
+        </div>
+        <div class="header-cashier" id="activeCashierBadge">Kasir: -</div>
       </div>
-      <button class="audio-toggle-btn" id="audioToggleBtn" onclick="toggleAudio()">🔊 Musik </button>
+      <button class="audio-toggle-btn" id="audioToggleBtn" onclick="toggleAudio()">🔊 Musik</button>
     </div>
     <div class="stats-container">
       <div class="stat-box">
         <div class="stat-label">
           <span>❤️ Kepuasan Pelanggan</span>
-          <span id="csatScore">50%</span>
+          <span id="csatScore">20%</span>
         </div>
         <div class="progress-bg">
           <div class="progress-fill" id="csatBar"></div>
@@ -550,8 +668,8 @@
       </div>
       <div class="stat-box">
         <div class="stat-label">
-          <span>🤝 Moral Tim</span>
-          <span id="moraleScore">50%</span>
+          <span>🤝 Moral<br>Tim Kerja</span>
+          <span id="moraleScore">20%</span>
         </div>
         <div class="progress-bg">
           <div class="progress-fill" id="moraleBar"></div>
@@ -560,12 +678,10 @@
     </div>
   </div>
 
-  <!-- SCROLLABLE CONTENT AREA -->
   <div class="content-area" id="gameArea">
-    <!-- Rendered via JS -->
+    <!-- Populated dynamically via JS -->
   </div>
 
-  <!-- POPUP DIALOGUE & CONSEQUENCE MODAL -->
   <div class="modal-overlay" id="feedbackModal">
     <div class="modal-dialogue-card">
       <div class="feedback-meta">
@@ -590,13 +706,13 @@
   let audioEnabled = true;
   let bgmTimeout = null;
   let noteIdx = 0;
-  
-  // Melodi Arpeggiator RPG (Progresi Ceria: C Major - F Major - G Major)
+  let cashierName = "Kasir";
+
   const melody = [
-     261.63, 329.63, 392.00, 523.25, // C Major naik (C4, E4, G4, C5)
-     349.23, 440.00, 523.25, 698.46, // F Major naik (F4, A4, C5, F5)
-     392.00, 493.88, 587.33, 783.99, // G Major naik (G4, B4, D5, G5)
-     523.25, 392.00, 329.63, 261.63  // C Major turun kembali
+     261.63, 329.63, 392.00, 523.25,
+     349.23, 440.00, 523.25, 698.46,
+     392.00, 493.88, 587.33, 783.99,
+     523.25, 392.00, 329.63, 261.63
   ];
 
   function initAudio() {
@@ -606,7 +722,7 @@
   }
 
   function playBGM() {
-    if (!audioEnabled) return;
+    if (!audioEnabled || !audioContext) return;
     try {
       const now = audioContext.currentTime;
       const freq = melody[noteIdx];
@@ -614,14 +730,12 @@
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
       
-      // Tipe 'square' menghasilkan suara 8-bit klasik ala Gameboy/SNES
       osc.type = 'square'; 
       osc.frequency.value = freq;
       
-      // Envelope staccato (suara pendek, memantul, dan ceria)
       gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.03, now + 0.02); // Attack sangat cepat
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15); // Decay cepat
+      gain.gain.linearRampToValueAtTime(0.025, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
       
       osc.connect(gain);
       gain.connect(audioContext.destination);
@@ -629,13 +743,11 @@
       osc.stop(now + 0.15);
 
       noteIdx = (noteIdx + 1) % melody.length;
-      // Tempo sangat cepat (150ms per nada) memberikan efek petualangan / jalan cepat
       bgmTimeout = setTimeout(playBGM, 150); 
     } catch (e) {
       console.warn("Audio BGM Gagal", e);
     }
   }
-  
 
   function stopBGM() {
     if (bgmTimeout) {
@@ -656,20 +768,20 @@
       if (type === 'blue') {
         osc.frequency.setValueAtTime(523.25, now);
         osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
-        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.setValueAtTime(0.25, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
         osc.start(now);
         osc.stop(now + 0.2);
       } else if (type === 'yellow') {
         osc.frequency.setValueAtTime(440, now);
-        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.setValueAtTime(0.18, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
         osc.start(now);
         osc.stop(now + 0.12);
       } else if (type === 'red') {
         osc.frequency.setValueAtTime(220, now);
         osc.frequency.exponentialRampToValueAtTime(146.83, now + 0.25);
-        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.setValueAtTime(0.25, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
         osc.start(now);
         osc.stop(now + 0.25);
@@ -683,16 +795,58 @@
     audioEnabled = !audioEnabled;
     const btn = document.getElementById('audioToggleBtn');
     if (audioEnabled) {
-      btn.innerText = '🔊 Music On';
+      btn.innerText = '🔊 Musik';
       initAudio();
       playBGM();
     } else {
-      btn.innerText = '🔇 Music Off';
+      btn.innerText = '🔇 Senyap';
       stopBGM();
     }
   }
 
-  // Komunikasi ke LMS (Hanya dideklarasikan, tidak dipanggil otomatis di awal)
+  function updateLiveTimestamp() {
+    const now = new Date();
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    const dayName = days[now.getDay()];
+    const date = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+
+    const formatted = `${dayName}, ${date} ${month} ${year}`;
+    const elem = document.getElementById('currentDateDisplay');
+    if (elem) elem.innerText = formatted;
+  }
+
+  function submitClockIn() {
+    const input = document.getElementById('cashierNameInput');
+    const val = input.value.trim();
+    const errorEl = document.getElementById('nameInputError');
+
+    if (!val) {
+      errorEl.style.display = 'block';
+      input.focus();
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    cashierName = val;
+    document.getElementById('briefingCashierName').innerText = cashierName;
+    document.getElementById('activeCashierBadge').innerText = `Kasir: ${cashierName}`;
+
+    // Transisi dari layar Absensi ke Briefing Manager
+    document.getElementById('clockInScreen').style.display = 'none';
+    document.getElementById('briefingScreen').style.display = 'flex';
+  }
+
+  function startSimulatedShift() {
+    document.getElementById('briefingScreen').style.display = 'none';
+    initAudio();
+    playBGM();
+    renderScene();
+  }
+
   function notifyLMS() {
     try {
       if(window.parent) window.parent.postMessage("scoreBarFound", "*");
@@ -705,28 +859,28 @@
   const rawScenarios = [
     {
       time: "07:00 WIB",
-      title: "Buka Toko & Noda di Lantai Depan Kasir",
-      desc: "Shift pagi baru dimulai. Anda melihat jejak sepatu kotor dan cipratan lumpur di lantai depan meja kasir dari shift malam kemarin.",
+      title: "Buka Toko & Terdapat Noda <br> di Lantai Depan Kasir",
+      desc: "Shift pagi baru dimulai. Bapak/Ibu melihat jejak sepatu kotor dan cipratan lumpur di lantai depan meja kasir dari shift malam kemarin.",
       visual: `<div class="visual-stage"><span class="anim-swing">🧹</span><span class="anim-pulse">👣</span><span class="anim-float">✨</span></div>`,
       options: [
         {
           type: "red", tag: "🔴 Disengaged",
-          text: "Membiarkannya, karena pada jadwal, ada rekan kerja yang bertugas untuk membersihkan area tersebut pada jam 09:00 pagi.",
-          csat: -18, morale: -10,
-          dialogue: "Pelanggan Pertama: 'Aduh, lantainya becek dan kotor ya... bikin sepatu saya jadi kotor deh.'",
-          rationale: "Respon tidak peka terhadap kondisi tersebut memberikan kesan toko yang tidak terawat di mata pelanggan."
+          text: "Membiarkannya, karena pada jadwal, ada tim kerja lainnya yang bertugas untuk membersihkan area tersebut pada jam 09:00 pagi.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Aduh, lantainya becek dan kotor ya... bikin sepatu saya jadi kotor deh.'",
+          rationale: "Respon tidak peka terhadap kondisi toko yang kotor memberikan kesan toko yang tidak terawat di mata pelanggan."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
-          text: "Menandai area dengan papan penanda 'Lantai Licin' dan memberi tahu rekan kerjanya yang bertugas untuk membersihkan area tersebut.",
-          csat: 3, morale: 2,
-          dialogue: "Pimpinan Shift: 'Bagus sudah kamu pasang tanda lantai licin, tetapi kenapa nggak langsung kamu bersihkan sendiri'",
+          text: "Menandai area dengan papan penanda 'Lantai Licin' dan memberi tahu tim kerja lainnya yang bertugas untuk membersihkan area tersebut.",
+          csat: 5, morale: 5,
+          dialogue: "Bagus karena sudah berusaha untuk memberitahu pelanggan jika lantai licin, tetapi kenapa harus menunggu dan tidak langsung membersihkannya'",
           rationale: "Kondisi yang tidak sesuai tidak dibiarkan begitu saja, namun pelanggan tetap melihat noda kotor di depan kasir."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Mengambil alat pel secara sukarela dan membersihkan noda sebelum konsumen lewat.",
-          csat: 15, morale: 10,
+          text: "Inisiatif mengambil alat pel dan membersihkan noda sebelum pelanggan lewat.",
+          csat: 10, morale: 10,
           dialogue: "Pelanggan: 'Wah, tokonya bersih dan wangi sekali pagi-pagi, jadi suka belanja di sini.'",
           rationale: "Inisiatif ekstra Anda memastikan standar kebersihan toko terjaga dengan baik tanpa saling lempar tanggung jawab."
         }
@@ -734,30 +888,30 @@
     },
     {
       time: "08:30 WIB",
-      title: "Pelanggan Tergesa-Gesa",
+      title: "Pelanggan yang Tergesa-Gesa",
       desc: "Jam padat berangkat kerja. Seorang pelanggan meletakkan roti dengan tangan gemetar sembari terus melirik jam tangannya.",
       visual: `<div class="visual-stage"><span class="anim-shake">🏃‍♂️</span><span class="anim-pulse">⌚️</span><span class="anim-float">🚆</span></div>`,
       options: [
         {
           type: "red", tag: "🔴 Disengaged",
-          text: "Melakukan scan barang dengan kecepatan biasa sambil merapikan struk yang menumpuk tanpa menghiraukan kepanikan pelanggan.",
-          csat: -20, morale: -5,
-          dialogue: "Pelanggan: 'Duh Mas/Mbak, bisa lebih cepat nggak ya?! Saya bisa telat ke kantornya nih!'",
-          rationale: "Ketidakpedulian emosional menciptakan friksi tinggi dan membuat pelanggan merasa tidak dihargai."
+          text: "Melakukan scan barang dengan santai sambil merapikan struk yang menumpuk tanpa menghiraukan kepanikan pelanggan.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Duh, bisa lebih cepat nggak ya?! Saya jadi telat ke kantornya nih!'",
+          rationale: "Ketidakpedulian emosional menciptakan ketegangan dan membuat pelanggan merasa tidak dihargai."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
           text: "Menyapa dengan salam standar toko yang lengkap dan memproses transaksi sesuai ritme durasi kerja kasir yang baku.",
-          csat: 4, morale: 0,
-          dialogue: "Pelanggan: 'Terima kasih struknya...' (langsung lari terburu-buru keluar pintu).",
+          csat: 5, morale: 5,
+          dialogue: "Pelanggan: 'Terima kasih, struknya nggak usah...' (langsung lari terburu-buru keluar pintu).",
           rationale: "Prosedur operasional kasir terlaksana, namun kurang tanggap membaca situasi darurat pelanggan."
         },
         {
           type: "blue", tag: "🔵 Engaged",
           text: "Membaca urgensinya, memproses transaksi dengan sigap, langsung mengantongi barang, kemudian tersenyum: 'Hati-hati di jalan'",
-          csat: 16, morale: 10,
-          dialogue: "Pelanggan: 'Wah, terima kasih banyak ya Mas/Mbak pengertiannya! Sangat membantu!'",
-          rationale: "Empati situasional dan kecepatan pelayanan (*Discretionary Effort*) menciptakan sentuhan kepedulian di saat genting."
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Wah, terima kasih banyak ya pengertiannya! Saya jadi nggak telat ke kantornya deh!'",
+          rationale: "Empati situasional dan kecepatan pelayanan menciptakan sentuhan kepedulian di saat genting."
         }
       ]
     },
@@ -769,22 +923,22 @@
       options: [
         {
           type: "red", tag: "🔴 Disengaged",
-          text: "Mengangkat bahu dan menjawab singkat: 'Kalau di rak habis ya sudah ludes Bu, belum datang lagi.'",
-          csat: -20, morale: -10,
-          dialogue: "Ibu Pelanggan: 'Kecewa banget, baru jam 10 masa sudah habis?! Cuma jebakan promo aja kali ya!'",
-          rationale: "Sikap defensif dan acuh merusak integritas promosi toko dan memicu komplain negatif."
+          text: "Mengangkat bahu dan menjawab singkat: 'Kalau di rak habis ya sudah ludes Bu, belum datang lagi barangnya.'",
+          csat: -10, morale: -10,
+          dialogue: "Ibu Pelanggan: 'Masa baru jam 10 sudah habis?! Bikin promosi kok nggak niat!'",
+          rationale: "Sikap defensif dan acuh merusak integritas promosi toko dan memicu komplain negatif dari pelanggan."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
-          text: "Meminta maaf secara sopan bahwa display sedang kosong, dan menyarankan ibu tersebut datang kembali esok pagi saat jadwal restock.",
-          csat: 4, morale: 0,
+          text: "Meminta maaf secara sopan bahwa display sedang kosong, dan menyarankan ibu tersebut untuk datang kembali di keesokan harinya.",
+          csat: 5, morale: 5,
           dialogue: "Ibu Pembeli: 'Ya sudahlah... sayang sekali saya sudah jauh-jauh datang ke sini.'",
           rationale: "Jawaban sopan dan sesuai kenyataan di lapangan, namun tidak memberikan solusi alternatif saat itu juga."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Minta izin sejenak mengecek ketersediaan di gudang, dan sigap mengarahkan ke merek alternatif berkualitas setara yang juga berdiskon jika stok benar-benar kosong.",
-          csat: 15, morale: 12,
+          text: "Minta izin sejenak mengecek ketersediaan di gudang, dan sigap mengarahkan ke merek alternatif dengan kualitas setara yang juga sedang promosi jika stok benar-benar kosong.",
+          csat: 10, morale: 10,
           dialogue: "Ibu Pembeli: 'Terima kasih ya sudah diperiksa ke gudang dan sudah memberikan rekomendasi alternatifnya!'",
           rationale: "Upaya ekstra mencarikan jalan keluar menyelamatkan potensi penjualan dan mengobati kekecewaan konsumen."
         }
@@ -799,50 +953,50 @@
         {
           type: "red", tag: "🔴 Disengaged",
           text: "Mendesah keras di depan umum, menunjukkan mimik wajah kesal, dan mulai menghitung koin satu demi satu dengan sangat lambat.",
-          csat: -22, morale: -15,
-          dialogue: "Pelanggan: 'Mas/Mbak, uang koin juga alat pembayaran yang sah kan?! Kenapa cemberut begitu?'",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Uang koin juga alat pembayaran yang sah kan?! Kalau diliatin gini, besok-besok saya nggak mau belanja di sini lagi deh.'",
           rationale: "Mempermalukan pelanggan di depan antrean menciptakan trauma bagi pelanggan."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
           text: "Menerima koin dan menghitungnya secara tenang sesuai panduan verifikasi uang tunai hingga jumlahnya pas tanpa banyak bicara.",
-          csat: 5, morale: 2,
+          csat: 5, morale: 5,
           dialogue: "Pelanggan: 'Terima kasih sudah mau menghitung uang receh saya ya...' (agak segan pada antrean belakang).",
-          rationale: "Profesional dan taat aturan, namun suasana antrean di belakang menjadi agak tegang karena menunggu cukup lama."
+          rationale: "Profesional dan taat aturan, namun suasana antrean di belakang menjadi agak tegang karena pelanggan lainnya menunggu cukup lama."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Tersenyum ramah ('Pas sekali kami butuh kembalian Bu'), sigap menyusun koin, sambil memanggil rekan untuk membuka kasir sebelah.",
-          csat: 18, morale: 15,
+          text: "Tersenyum ramah dan berkata 'Pas sekali kami butuh kembalian Bu', sambil memanggil rekan untuk membuka kasir sebelah.",
+          csat: 10, morale: 10,
           dialogue: "Pelanggan: 'Lega sekali dilayani dengan sopan tanpa dihakimi, kasir sebelahnya juga langsung dibuka!'",
-          rationale: "Menunjukkan rasa hormat tinggi dan berkolaborasi menjaga kelancaran antrean (Discretionary Effort tim)."
+          rationale: "Menunjukkan rasa hormat kepada pelanggan dan berkolaborasi untuk menjaga kepuasan pelanggan lainnya."
         }
       ]
     },
     {
       time: "13:45 WIB",
-      title: "Selisih Harga Rak vs Komputer",
+      title: "Selisih Harga di Rak dengan di Komputer",
       desc: "Pelanggan komplain karena harga susu di rak tertulis Rp 79.000, tetapi saat di-scan di layar kasir tertera Rp 89.000.",
       visual: `<div class="visual-stage"><span class="anim-swing">🏷️</span><span class="anim-shake">😠</span><span class="anim-float">💻</span></div>`,
       options: [
         {
           type: "red", tag: "🔴 Disengaged",
           text: "Membantah pelanggan: 'Dari sistemnya begitu Bu. Kalau di komputer 89 ribu, ya berarti harganya segitu.'",
-          csat: -25, morale: -15,
-          dialogue: "Pelanggan: 'Ini namanya penipuan konsumen! Saya foto raknya dan laporkan ke media sosial!'",
-          rationale: "Sikap arogan memicu ketidakpuasan pelanggan"
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Ini namanya penipuan konsumen! Indomaret masa gitu?!'",
+          rationale: "Sikap arogan dalam menghadapi komplain memicu ketidakpuasan pelanggan."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
           text: "Menjelaskan aturan sistem bahwa tag harga mungkin belum diganti dan menawarkan opsi pembatalan item.",
-          csat: 3, morale: 0,
-          dialogue: "Pelanggan: 'Ya sudah saya cancel saja susunya, tolong dong lebih teliti ganti labelnya.'",
-          rationale: "Mengikuti batas regulasi sistem dengan tertib, namun membiarkan konsumen pulang kecewa."
+          csat: 5, morale: 5,
+          dialogue: "Pelanggan: 'Ya sudah saya cancel saja susunya, tolong dong lebih diperhatiin lagi tag harga di rak.'",
+          rationale: "Mengikuti batas regulasi sistem dengan tertib, namun membiarkan konsumen pulang dengan kecewa dan kehilangan potensi penjualan."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Meminta maaf dengan tulus, menahan transaksi sejenak untuk berkoordinasi dengan pimpinan shift terkait harga barangnya",
-          csat: 20, morale: 10,
+          text: "Meminta maaf dengan tulus, menahan transaksi sejenak untuk berkoordinasi dengan pimpinan shift terkait harga barangnya.",
+          csat: 10, morale: 10,
           dialogue: "Pelanggan: 'Terima kasih banyak atas tanggung jawab dan solusinya, pelayanan di sini jempolan!'",
           rationale: "Melindungi kepercayaan pelanggan dengan mencoba untuk memverifikasi kembali harga barangnya."
         }
@@ -857,23 +1011,23 @@
         {
           type: "red", tag: "🔴 Disengaged",
           text: "Langsung melempar uang Rp 5.000 dari kantong pribadi ke laci sambil menggerutu dan buru-buru absen pulang.",
-          csat: 0, morale: -18,
+          csat: -10, morale: -10,
           dialogue: "Rekan Kerja Shift Baru: 'Kalau ditambal asal-asalan begini, nanti pas audit kita berdua yang kena masalah.'",
-          rationale: "Menyelesaikan masalah secara sembrono merusak akuntabilitas tim."
+          rationale: "Menyelesaikan masalah secara sembrono merusak kepercayaan dan hubungan tim kerja."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
           text: "Mencatat selisih Rp 5.000 pada formulir berita acara serah terima laci kasir secara transparan sesuai SOP pembukuan harian toko.",
-          csat: 0, morale: 5,
+          csat: 5, morale: 5,
           dialogue: "Pimpinan Shift: 'Baik, selisih tercatat di sistem. Nanti kita jadikan catatan evaluasi berkala.'",
           rationale: "Sangat taat asas kepatuhan administrasi dan menjaga kejujuran operasional."
         },
         {
-          type: "blue", tag: "🔵 Disengaged",
-          text: "Meluangkan waktu 5 menit ekstra bersama rekan baru meninjau struk batal dan slip non-tunai bersama hingga akar masalah ditemukan.",
-          csat: 0, morale: 20,
+          type: "blue", tag: "🔵 Engaged",
+          text: "Meluangkan waktu bersama rekan kerja shift baru untuk meninjau kembali rincian transaksi hingga akar masalahnya ditemukan.",
+          csat: 10, morale: 10,
           dialogue: "Rekan Shift Baru: 'Wah ternyata ada struk retur yang belum ke-input. Makasih banget udah mau bantu cek bareng.'",
-          rationale: "Membangun Psychological Safety dan solidaritas tim melalui pendampingan rekan."
+          rationale: "Usaha lebih untuk bertanggung jawab menyelesaikan masalah menumbuhkan tingkat kepercayaan dan hubungan di dalam tim kerja."
         }
       ]
     },
@@ -886,23 +1040,23 @@
         {
           type: "red", tag: "🔴 Disengaged",
           text: "Menjawab tanpa memandang wajahnya sambil terus mengetik: 'Lorong obat di belakang sana kek.'",
-          csat: -15, morale: 0,
-          dialogue: "Kakek: 'Aduh di mana ya nak... mata kakek sudah agak kabur melihat tulisan kecil-kecil.'",
+          csat: -10, morale: -10,
+          dialogue: "Kakek: 'Aduh di mana ya obatnya... mata kakek sudah agak kabur, jadi nggak keliatan kalau harus melihat tulisan kecil-kecil.'",
           rationale: "Kurang empati pada konsumen seringkali membuat pelanggan merasa diabaikan."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
           text: "Memberikan panduan arah yang sangat detail dari balik konter: 'Di Lorong 3 sebelah kiri, rak nomor 2 dari bawah ya Kek.'",
-          csat: 5, morale: 2,
-          dialogue: "Kakek: 'Oh Lorong 3 ya... baik nak, kakek coba cari pelan-pelan ke sana.'",
+          csat: 5, morale: 5,
+          dialogue: "Kakek: 'Oh Lorong 3 ya... baik, kakek coba cari pelan-pelan ke sana.'",
           rationale: "Instruksi yang diberikan sudah akurat dan santun, namun pelanggan lansia rentan masih perlu dibantu secara langsung."
         },
         {
           type: "blue", tag: "🔵 Engaged",
           text: "Meminta izin rekan keluar konter sejenak, mengantarkan kakek ke rak, dan membantunya memilih ukuran botol yang sesuai.",
-          csat: 18, morale: 10,
-          dialogue: "Kakek: 'Terima kasih banyak nak, baik sekali kamu mau menuntun kakek langsung.'",
-          rationale: "Pelayanan dari hati menghadirkan kehangatan nyata yang melebihi standar baku (Discretionary Effort)."
+          csat: 10, morale: 10,
+          dialogue: "Kakek: 'Terima kasih banyak, baik sekali kamu mau menuntun kakek langsung.'",
+          rationale: "Pelayanan dari hati menghadirkan kehangatan nyata yang melebihi standar baku."
         }
       ]
     },
@@ -915,7 +1069,7 @@
         {
           type: "red", tag: "🔴 Disengaged",
           text: "Menatap sinis dari kejauhan dan berbisik ke rekan kerja tentang orang tua yang tidak bisa mengawasi anaknya.",
-          csat: -20, morale: -10,
+          csat: -10, morale: -10,
           dialogue: "Ibu Pelanggan: 'Bukannya dibantuin, malah diliatin doang... padahal ini kan musibah.'",
           rationale: "Sikap menghakimi menciptakan trauma emosional bagi pengunjung."
         },
@@ -923,14 +1077,14 @@
           type: "yellow", tag: "🟡 Satisfied",
           text: "Segera memasang tanda untuk berhati-hati karena lantai licin.",
           csat: 5, morale: 5,
-          dialogue: "Ibu Pelanggan: 'Maaf ya Mbak/Mas, lantai jadi kotor karena es krim anak saya...'",
-          rationale: "Mengamankan area dari bahaya terpeleset secara efektif."
+          dialogue: "Ibu Pelanggan: 'Maaf ya, lantainya jadi kotor karena es krim anak saya...'",
+          rationale: "Mengamankan area dari bahaya terpeleset."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Menghampiri tersenyum ('Tidak apa-apa Ibu, jangan cemas'), sigap bantu membersihkan lantai, dan menghibur si anak.",
-          csat: 20, morale: 15,
-          dialogue: "Ibu Pelanggan: 'Ya ampun ramah sekali... tangisan anak saya langsung reda. Terima kasih banyak!'",
+          text: "Menghampiri sambil tersenyum dan berkata 'Tidak apa-apa Ibu, jangan cemas', kemudian sigap bantu membersihkan lantai dan menghibur si anak.",
+          csat: 10, morale: 10,
+          dialogue: "Ibu Pelanggan: 'Ya ampun ramah sekali... tangisan anak saya juga langsung reda. Terima kasih banyak ya!'",
           rationale: "Empati kemanusiaan mengubah situasi krisis menjadi momen loyalitas yang kuat."
         }
       ]
@@ -944,62 +1098,63 @@
         {
           type: "red", tag: "🔴 Disengaged",
           text: "Berkata ketus: 'Jaringannya mati kak. Kalau nggak pegang cash belanjaannya kita void semua ya.'",
-          csat: -25, morale: -10,
+          csat: -10, morale: -10,
           dialogue: "Pelanggan: 'Masa langsung dibatalkan?! Capek-capek saya milih barang setengah jam di dalam!'",
-          rationale: "Menghilangkan omset seketika dan memicu kemarahan akibat ketiadaan inisiatif."
+          rationale: "Menghilangkan potensi penjualan dan memicu kemarahan akibat tidak adanya inisiatif."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
           text: "Meminta maaf atas kendala sistem perbankan dan meminta pelanggan bersabar menunggu 3-5 menit proses restart EDC.",
-          csat: 4, morale: 2,
+          csat: 5, morale: 5,
           dialogue: "Pelanggan: 'Oke deh saya tunggu restart mesinnya, semoga cepat nyambung lagi ya.'",
           rationale: "Prosedur penanganan gangguan teknis standar dijalankan dengan cukup tenang."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Menyampaikan maaf dengan tulus, segera memandu opsi pembayaran instan (QRIS dinamis / transfer), sembari memproses restart mesin.",
-          csat: 16, morale: 10,
-          dialogue: "Pelanggan: 'Wah untung bisa langsung scan QRIS! Cepat dan tidak perlu repot nunggu restart lama.'",
-          rationale: "Ketangkasan menyediakan alternatif solusi menyelamatkan transaksi dan menjaga kelancaran antrean."
+          text: "Menyampaikan maaf dengan tulus, segera memandu opsi pembayaran lainnya, sembari memproses restart mesin.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Wah untung bisa langsung ya, jadinya tidak perlu repot nunggu restart lama.'",
+          rationale: "Berinisiatif untuk memberikan solusi menyelamatkan potensi penjualan dan menjaga kepuasan pelanggan."
         }
       ]
     },
     {
       time: "21:45 WIB",
-      title: "Ketukan Pintu Closing",
-      desc: "Rolling door sudah ditutup separuh. Seorang ayah mengetuk memohon izin membeli obat penurun panas untuk anaknya yang demam tinggi.",
-      visual: `<div class="visual-stage"><span class="anim-swing">🚪</span><span class="anim-shake">👨</span><span class="anim-float">💊</span></div>`,
+      title: "Dompet Pelanggan Tertinggal Menjelang Tutup Toko",
+      desc: "Saat sedang mengelap meja kasir untuk persiapan tutup toko, Bapak/Ibu menemukan sebuah dompet tertinggal. Bapak/Ibu ingat betul itu milik seorang langganan yang baru saja berjalan keluar menuju area parkir.",
+      visual: `<div class="visual-stage"><span class="anim-swing">🧽</span><span class="anim-shake">👝</span><span class="anim-float">👩</span></div>`,
       options: [
         {
           type: "red", tag: "🔴 Disengaged",
-          text: "Melambaikan tangan menolak dari balik kaca: 'Tokonya sudah tutup! Cari toko lain aja!'",
-          csat: -25, morale: -5,
-          dialogue: "Sang Ayah: 'Tolonglah Mas, anak saya demam menggigil...'",
-          rationale: "Ketiadaan rasa kemanusiaan pada situasi darurat merusak citra toko."
+          text: "Memasukkan dompet ke laci bawah kasir begitu saja. Biar besok saja diurus kalau ibunya sadar dan datang mencari ke toko.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan (keesokan harinya): 'Aduh, semalam saya panik banget nyariin dompet... kok saya nggak dipanggil sih pas saya masih di depan pintu?'",
+          rationale: "Sikap pasif dan kurangnya kepedulian membuat pelanggan mengalami kepanikan semalaman yang sebenarnya bisa dicegah."
         },
         {
           type: "yellow", tag: "🟡 Satisfied",
-          text: "Membuka pintu sedikit dan menjelaskan sopan bahwa jam operasional kasir telah ditutup oleh sistem server pusat demi keamanan audit.",
-          csat: 2, morale: 0,
-          dialogue: "Sang Ayah: 'Oh begitu... baik kalau memang sistemnya terkunci. Terima kasih infonya.'",
-          rationale: "Kepatuhan penuh pada jam kerja dan keamanan toko, meski dilematis secara kemanusiaan."
+          text: "Mengamankan dompet tersebut dan menyerahkannya kepada Pimpinan Shift beberapa menit kemudian untuk disimpan.",
+          csat: 5, morale: 5,
+          dialogue: "Pimpinan Shift: 'Oke, sudah saya catat di buku serah terima barang tertinggal. Besok kalau ibunya datang, arahkan ke saya ya.'",
+          rationale: "Bapak/Ibu telah menjalankan SOP pengamanan barang temuan dengan sangat tertib, meskipun pelanggan tetap akan pulang dalam keadaan gelisah."
         },
         {
           type: "blue", tag: "🔵 Engaged",
-          text: "Mempersilakan masuk cepat, langsung mengambilkan obat demam ke rak, dan memproses transaksi manual darurat dengan teliti.",
-          csat: 25, morale: 20,
-          dialogue: "Sang Ayah: 'Terima kasih banyak... kebaikanmu malam ini menyelamatkan anak saya yang sedang demam tinggi.'",
-          rationale: "Bentuk tertinggi Discretionary Effort: melayani dengan hati pada saat paling krusial."
+          text: "Meninggalkan meja kasir sebentar, bergegas berlari ke area parkir mengejar pelanggan tersebut untuk mengembalikan dompetnya secara langsung.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Ya ampun! Saya sama sekali nggak sadar... Terima kasih banyak ya, saya sampe dikejar-kejar begini!'",
+          rationale: "Inisiatif berlari mengejar pelanggan ke parkiran memberikan kelegaan instan dan menciptakan rasa kepuasan pelanggan yang kuat."
         }
       ]
     }
   ];
 
   let currentWave = 0;
-  let csat = 50;    // Mulai dari 50%
-  let morale = 50;  // Mulai dari 50%
+  let csat = 20;
+  let morale = 20;
   let history = [];
   let currentOptions = [];
+  let pendingChoice = null;
 
   function shuffleArray(array) {
     let shuff = [...array];
@@ -1008,14 +1163,6 @@
       [shuff[i], shuff[j]] = [shuff[j], shuff[i]];
     }
     return shuff;
-  }
-
-  function startGame() {
-    document.getElementById('startScreen').style.display = 'none';
-    initAudio();
-    playBGM();
-    // HAPUS notifyLMS() DARI SINI
-    renderScene();
   }
 
   function updateDashboard() {
@@ -1046,7 +1193,6 @@
     }
 
     const scene = rawScenarios[currentWave];
-    // Acak urutan jawaban
     currentOptions = shuffleArray(scene.options);
 
     const letterBullets = ['A', 'B', 'C'];
@@ -1066,7 +1212,7 @@
         <div class="scene-desc">${scene.desc}</div>
         ${scene.visual}
       </div>
-      <div class="choice-prompt">Pilih Tindakan Anda:</div>
+      <div class="choice-prompt">Pilih Tindakan Rekan ${cashierName}:</div>
       <div class="choices-wrapper">
         ${optionsHtml}
       </div>
@@ -1074,8 +1220,6 @@
 
     updateDashboard();
   }
-
-  let pendingChoice = null;
 
   function selectChoice(index) {
     pendingChoice = currentOptions[index];
@@ -1135,22 +1279,22 @@
 
     let dominantProfile = "DISENGAGED";
     let dominantClass = "tag-red";
-    let dominantDesc = "Anda cenderung bersikap pasif. Hal ini menyebabkan Kepuasan Pelanggan merosot drastis dan beban moral tim menjadi negatif karena sikap apatis terhadap masalah.";
+    let dominantDesc = `Rekan ${cashierName} cenderung bersikap pasif. Hal ini menyebabkan Kepuasan Pelanggan merosot drastis dan beban moral tim menjadi negatif karena sikap apatis terhadap masalah.`;
 
     if (blue >= yellow && blue >= red) {
       dominantProfile = "ENGAGED";
       dominantClass = "tag-blue";
-      dominantDesc = "Luar biasa! Anda menunjukkan kepemilikan kerja otentik. Melalui upaya ekstra (Discretionary Effort), Anda menciptakan iklim kolaborasi hebat dan loyalitas konsumen tinggi.";
+      dominantDesc = `Luar biasa, Rekan ${cashierName}! Anda menunjukkan kepemilikan kerja otentik. Melalui upaya ekstra (Discretionary Effort), Anda menciptakan iklim kolaborasi hebat dan loyalitas konsumen tinggi.`;
     } else if (yellow >= blue && yellow >= red) {
       dominantProfile = "SATISFIED";
       dominantClass = "tag-yellow";
-      dominantDesc = "Konsisten dan patuh aturan! Operasional berjalan aman. Namun, Anda masih membatasi diri pada tugas formal. Ingat, pelanggan mengingat sentuhan empati ekstra di luar teks baku SOP.";
+      dominantDesc = `Konsisten dan patuh aturan! Operasional shift berjalan aman di tangan Rekan ${cashierName}. Namun, Anda masih membatasi diri pada teks baku SOP. Ingat, pelanggan mengingat sentuhan empati ekstra.`;
     }
 
-    // Penambahan font-size dan padding inline agar label profil di layar akhir tetap proporsional (tidak ikut mengecil seperti di modal popup)
     area.innerHTML = `
       <div class="summary-card">
         <div style="font-size: 32px; margin-bottom: 6px;">📊</div>
+        <div style="font-size: 13px; font-weight: 800; color: var(--blue-primary); margin-bottom: 4px;">HASIL EVALUASI SHIFT: ${cashierName.toUpperCase()}</div>
         <div class="revealed-tag ${dominantClass}" style="display:inline-block; margin-bottom: 8px; font-size: 11px; padding: 4px 10px;">PROFIL DOMINAN: ${dominantProfile}</div>
         <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;">${dominantDesc}</p>
 
@@ -1170,45 +1314,49 @@
         </div>
 
         <div style="display:flex; justify-content:space-around; font-size:12px; font-weight:700; color:var(--text-dark); margin-top:10px; padding-top:10px; border-top:1px dashed #cbd5e1;">
-          <div>Persentase Akhir Kepuasan Pelanggan: <span style="color:${csat >= 70 ? '#10b981' : (csat >= 50 ? '#d97706' : '#dc2626')}">${csat}%</span></div>
-          <div>Persentase Akhir Moral Tim: <span style="color:${morale >= 70 ? '#10b981' : (morale >= 50 ? '#d97706' : '#dc2626')}">${morale}%</span></div>
+          <div>Skor CSAT: <span style="color:${csat >= 70 ? '#10b981' : (csat >= 50 ? '#d97706' : '#dc2626')}">${csat}%</span></div>
+          <div>Skor Moral Tim: <span style="color:${morale >= 70 ? '#10b981' : (morale >= 50 ? '#d97706' : '#dc2626')}">${morale}%</span></div>
         </div>
       </div>
 
       <div class="theory-section">
-        <div class="theory-title"><span>💡</span> Hal-hal yang berpengaruh terhadap keterhubungan diri sendiri dengan pekerjaan (engagement) </div>
+        <div class="theory-title"><span>💡</span> Pilar Keterlibatan Diri dalam Pekerjaan (Work Engagement)</div>
         <div class="theory-item" style="border-left-color: #8b5cf6;">
-          <strong>Meaningfulness</strong>
-          <p>Perasaan bahwa pekerjaan Anda bermakna dan memengaruhi orang lain secara positif. Terlihat jelas saat melayani lansia atau anak kecil (Skenario 7 & 8).</p>
+          <strong>Meaningfulness (Kebermaknaan Kerja)</strong>
+          <p>Perasaan bahwa pekerjaan Anda bermakna dan melindungi orang lain secara tulus. Terlihat jelas saat melayani lansia atau anak kecil (Skenario 7 & 8).</p>
         </div>
         <div class="theory-item" style="border-left-color: #10b981;">
           <strong>Psychological Safety (Aman Psikologis)</strong>
-          <p>Iklim kerja di mana anggota tim berani mencari solusi bersama (seperti saat selisih uang kasir) tanpa ketakutan dihakimi, memperkuat moral tim.</p>
+          <p>Iklim kerja saling peduli di mana tim berani mencari solusi bersama (seperti saat selisih kasir) tanpa rasa takut disalahkan (Skenario 6).</p>
         </div>
         <div class="theory-item" style="border-left-color: #f59e0b;">
-          <strong>Availability</strong>
-          <p>Kesiapan kognitif & emosional staf untuk "Hadir Sepenuhnya" memecahkan masalah mendadak, bukan sekadar menjawab mesin ("Mesin Offline", Skenario 9).</p>
+          <strong>Availability (Kesiapan Hadir Sepenuhnya)</strong>
+          <p>Kesiapan kognitif dan emosional staf untuk sigap merespon kendala tak terduga, alih-alih pasrah pada situasi ("Mesin Offline", Skenario 9).</p>
         </div>
       </div>
 
       <button class="btn-restart" onclick="restartGame()">
-        MULAI SHIFT BARU 🔄
+        ULANGI SHIFT BARU 🔄
       </button>
     `;
     updateDashboard();
-
-    // KIRIM PESAN KE LMS SETELAH HALAMAN AKHIR DITAMPILKAN
     notifyLMS();
   }
 
   function restartGame() {
     currentWave = 0;
-    csat = 50;
-    morale = 50;
+    csat = 0;
+    morale = 0;
     history = [];
-    renderScene();
+    document.getElementById('clockInScreen').style.display = 'flex';
+    document.getElementById('briefingScreen').style.display = 'none';
+    document.getElementById('cashierNameInput').value = '';
+    updateLiveTimestamp();
   }
 
+  window.addEventListener('DOMContentLoaded', () => {
+    updateLiveTimestamp();
+  });
 </script>
 </body>
 </html>
